@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Página CRUD</title>
+  <link rel="stylesheet" href="./CSS/styles.css">
+</head>
+<body>
+  <h1>Página CRUD</h1>
+  <p>Você está autenticado e pode gerenciar os registros.</p>
+  
+  <h2>Adicionar Novo Registro</h2>
+  <form id="addForm">
+    <label for="Nome">Nome:</label>
+    <input type="text" id="Nome" name="Nome" required>
+    
+    <label for="Perfil">Perfil:</label>
+    <input type="number" id="Perfil" name="Perfil" required>
+    
+    <button type="submit">Adicionar Registro</button>
+  </form>
+
+  <h2>Lista de Registros</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nome</th>
+        <th>Perfil</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody id="registrosTable">
+      <!-- Os registros serão carregados dinamicamente aqui -->
+    </tbody>
+  </table>
+
+  <script src="./JS/script.js"></script>
+</body>
+</html>
