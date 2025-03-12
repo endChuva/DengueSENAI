@@ -8,31 +8,34 @@
 </head>
 <body>
   <h1>Página CRUD</h1>
-  <p>Você está autenticado e pode gerenciar os registros.</p>
+  <p>Você está autenticado e pode gerenciar os usuários.</p>
   
-  <h2>Adicionar Novo Registro</h2>
+  <h2>Adicionar Novo Usuário</h2>
   <form id="addForm">
-    <label for="Nome">Nome:</label>
-    <input type="text" id="Nome" name="Nome" required>
+    <label for="User">Nome de Usuário:</label>
+    <input type="text" id="User" name="User" required>
+    
+    <label for="Senha">Senha:</label>
+    <input type="password" id="Senha" name="Senha" required>
     
     <label for="Perfil">Perfil:</label>
     <input type="number" id="Perfil" name="Perfil" required>
     
-    <button type="submit">Adicionar Registro</button>
+    <button type="submit">Adicionar Usuário</button>
   </form>
 
-  <h2>Lista de Registros</h2>
+  <h2>Lista de Usuários</h2>
   <table>
     <thead>
       <tr>
         <th>ID</th>
         <th>Nome</th>
+        <th>Senha</th>
         <th>Perfil</th>
         <th>Ações</th>
       </tr>
     </thead>
-    <tbody id="registrosTable">
-      <!-- Os registros serão carregados dinamicamente aqui -->
+    <tbody id="usersTable">
     </tbody>
   </table>
 

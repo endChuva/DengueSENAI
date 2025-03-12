@@ -26,15 +26,17 @@ connection.connect((err) => {
   console.log('MySQL---ON!');
 });
 
+// Página de login
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'login.html'));
 });
 
+// Página de CRUD (somente acessada após login)
 app.get('/crud', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'crud.html'));
 });
 
-// login
+// Login
 app.post('/api/login', (req, res) => {
   const { User, Senha } = req.body;
   const query = 'SELECT * FROM gm_users WHERE User = ? AND Senha = ?';
@@ -50,50 +52,50 @@ app.post('/api/login', (req, res) => {
   });
 });
 
-// registros
-app.get('/api/registros', (req, res) => {
-  connection.execute('SELECT * FROM gm_registros', (err, results) => {
-    if (err) return res.status(500).json({ error: 'Erro ao obter os registros' });
+// Listar usuários
+app.get('/api/users', (req, res) => {
+  connection.execute('SELECT * FROM gm_users', (err, results) => {
+    if (err) return res.status(500).json({ error: 'Erro ao obter os usuários' });
     res.json(results);
   });
 });
 
-// novo registro
-app.post('/api/registros', (req, res) => {
-  const { Nome, Perfil } = req.body;
-  if (!Nome || !Perfil) return res.status(400).json({ error: 'Todos os campos são obrigatórios' });
+// Adicionar novo usuário
+app.post('/api/users', (req, res) => {
+  const { User, Senha, Perfil } = req.body;
+  if (!User || !Senha || !Perfil) return res.status(400).json({ error: 'Todos os campos são obrigatórios' });
 
-  const query = 'INSERT INTO gm_registros (Nome, Perfil) VALUES (?, ?)';
-  connection.execute(query, [Nome, Perfil], (err, results) => {
-    if (err) return res.status(500).json({ error: 'Erro ao adicionar registro' });
+  const query = 'INSERT INTO gm_users (User, Senha, Perfil) VALUES (?, ?, ?)';
+  connection.execute(query, [User, Senha, Perfil], (err, results) => {
+    if (err) return res.status(500).json({ error: 'Erro ao adicionar usuário' });
     res.json({ success: true, id: results.insertId });
   });
 });
 
-// Editar registro
-app.put('/api/registros/:id', (req, res) => {
+// Editar usuário
+app.put('/api/users/:id', (req, res) => {
   const { id } = req.params;
-  const { Nome, Perfil } = req.body;
+  const { User, Senha, Perfil } = req.body;
 
-  const query = 'UPDATE gm_registros SET Nome = ?, Perfil = ? WHERE ID = ?';
-  connection.execute(query, [Nome, Perfil, id], (err) => {
-    if (err) return res.status(500).json({ error: 'Erro ao editar registro' });
+  const query = 'UPDATE gm_users SET User = ?, Senha = ?, Perfil = ? WHERE ID = ?';
+  connection.execute(query, [User, Senha, Perfil, id], (err) => {
+    if (err) return res.status(500).json({ error: 'Erro ao editar usuário' });
     res.json({ success: true });
   });
 });
 
-// Excluir registro
-app.delete('/api/registros/:id', (req, res) => {
+// Excluir usuário
+app.delete('/api/users/:id', (req, res) => {
   const { id } = req.params;
   
-  const query = 'DELETE FROM gm_registros WHERE ID = ?';
+  const query = 'DELETE FROM gm_users WHERE ID = ?';
   connection.execute(query, [id], (err) => {
-    if (err) return res.status(500).json({ error: 'Erro ao excluir registro' });
+    if (err) return res.status(500).json({ error: 'Erro ao excluir usuário' });
     res.json({ success: true });
   });
 });
 
 const PORT = 3000;
 app.listen(PORT, () => {
-  console.log(`Porta ${PORT}`);
+  console.log(`Servidor rodando na porta ${PORT}`);
 });
